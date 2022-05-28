@@ -1,0 +1,9 @@
+name: BlockHunt
+version: '${project.version}'
+main: tokyo.ramune.blockhunt.BlockHunt
+api-version: 1.18
+authors: [ Whiya ]
+description: BlockHunt Plugin
+commands:
+  blockhunt:
+    description: "BlockHuntを管理"
