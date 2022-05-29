@@ -1,5 +1,7 @@
 package tokyo.ramune.blockhunt.player;
 
+import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.FallingBlock;
 
 import java.util.UUID;
@@ -8,12 +10,14 @@ public class User {
 
     private UUID player;
     private Role role;
-    private FallingBlock hidingBlock;
+    private Block targetBlock;
+    private boolean isHiding;
 
     public User(UUID player, Role role) {
         this.player = player;
         this.role = role;
-        hidingBlock = null;
+        targetBlock = null;
+        isHiding = false;
     }
 
     public UUID getPlayer() {
@@ -28,15 +32,19 @@ public class User {
         this.role = role;
     }
 
-    public FallingBlock getHidingBlock() {
-        return hidingBlock;
+    public Block getTargetBlock() {
+        return targetBlock;
     }
 
-    public void setHidingBlock(FallingBlock hidingBlock) {
-        this.hidingBlock = hidingBlock;
+    public void setTargetBlock(Block targetBlock) {
+        this.targetBlock = targetBlock;
     }
 
-    public boolean isBlockHiding() {
-        return hidingBlock != null;
+    public void setHiding(boolean isHiding) {
+        this.isHiding = isHiding;
+    }
+
+    public boolean isHiding() {
+        return isHiding;
     }
 }

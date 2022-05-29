@@ -23,15 +23,12 @@ public class PlayerInteractListener implements Listener {
         Player player = e.getPlayer();
         User user = PlayerManager.getPlayer(player);
         if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)
-                && !Objects.equals(e.getHand(), EquipmentSlot.OFF_HAND)
+                && !Objects.equals(e.getHand(), EquipmentSlot.HAND)
                 && user.getRole().equals(Role.RUNNER)
-                && !user.isBlockHiding()) {
+                && !user.isHiding()) {
             Chat.sendMessage(player, ChatColor.GREEN + "隠れるブロックを選択しました!", true);
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-            player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation(), 15, 0.3, 0.3, 0.3, 0);
-            user.setHidingBlock(player.getWorld().spawnFallingBlock(player.getLocation(), e.getClickedBlock().getBlockData()));
-            user.getHidingBlock().setGravity(false);
-            user.getHidingBlock().setFallDistance(0);
+            user.setTargetBlock(e.getClickedBlock());
         }
     }
 }

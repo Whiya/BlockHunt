@@ -18,11 +18,11 @@ public class PlayerDeathListener implements Listener {
         Player player = e.getEntity();
         if (PlayerManager.getPlayer(player).getRole().equals(Role.RUNNER)) {
             User user = PlayerManager.getPlayer(player);
-            if (user.isBlockHiding()) {
+            if (user.isHiding()) {
                 player.getLocation().getBlock().setType(Material.AIR);
+                user.setTargetBlock(null);
             } else {
-                user.getHidingBlock().remove();
-                user.setHidingBlock(null);
+                user.setTargetBlock(null);
             }
             user.setRole(Role.DAEMON);
         }

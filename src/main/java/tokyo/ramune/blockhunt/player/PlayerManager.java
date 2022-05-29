@@ -1,8 +1,8 @@
 package tokyo.ramune.blockhunt.player;
 
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import tokyo.ramune.blockhunt.util.Chat;
 
@@ -47,19 +47,9 @@ public class PlayerManager {
         }
     }
 
-    public static User getPlayerFromFallingBlock(FallingBlock fallingBlock) {
-        for (User user : users) {
-            if (user.getHidingBlock().equals(fallingBlock)) {
-                return user;
-            }
-        }
-        return null;
-    }
-
     private static void initializePlayer(UUID player) {
         if (!isExistsUser(player)) {
             users.add(new User(player, Role.RUNNER));
-            // TODO !!!!!!!!!!!!!!!!!!!!!!
         }
     }
 
@@ -83,27 +73,47 @@ public class PlayerManager {
     }
 
     // ゲーム
-    public static void hideBlock(Player player, BlockData block) {
+    public static void hideBlock(Player player, Block block) {
         hideBlock(player.getUniqueId(), block);
     }
 
-    public static void hideBlock(UUID player, BlockData block) {
-        if (getPlayer(player).getHidingBlock() == null) {
-            Chat.sendMessage(Bukkit.getPlayer(player), ChatColor.RED + "まだ隠れるブロックが選択されてないみたいだよ! 隠れるブロックを右クリックして選択しよう!!", true);
-            Bukkit.getPlayer(player).playSound(Bukkit.getPlayer(player).getLocation(), Sound.BLOCK_ANVIL_LAND, 1 , 1);
-            return;
-        }
+    public static void hideBlock(UUID player, Block block) {
+        Player bukkitPlayer = Bukkit.getPlayer(player);
         User user = getPlayer(player);
-        Player bukkitPlayer = Bukkit.getPlayer(user.getPlayer());
-        if (!Bukkit.getPlayer(player).getLocation().getBlock().getType().equals(Material.AIR)) {
-            Chat.sendMessage(bukkitPlayer, ChatColor.RED + "そこには隠れられないよ!! ブロックが重ならないところに隠れよう!!", true);
-            Bukkit.getPlayer(player).playSound(bukkitPlayer.getLocation(), Sound.BLOCK_ANVIL_LAND, 1 , 1);
+        if (getPlayer(player).getTargetBlock() == null) {
+            Chat.sendMessage(bukkitPlayer, ChatColor.RED + "まだ隠れるブロックが選択されてないみたいだよ! 隠れるブロックを右クリックして選択しよう!!", true);
+            bukkitPlayer.playSound(Bukkit.getPlayer(player).getLocation(), Sound.BLOCK_ANVIL_LAND, 1 , 1);
             return;
         }
-        bukkitPlayer.getLocation().getBlock().setBlockData(block);
-        user.getHidingBlock().remove();
-        user.setHidingBlock(null);
+        if (!bukkitPlayer.getLocation().getBlock().getType().equals(Material.AIR)) {
+            Chat.sendMessage(bukkitPlayer, ChatColor.RED + "そこには隠れられないよ!! ブロックが重ならないところに隠れよう!!", true);
+            bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.BLOCK_ANVIL_LAND, 1 , 1);
+            return;
+        }
+        Location underBlock = bukkitPlayer.getLocation().clone().add(0, -1, 0);
+        if (underBlock.getBlock().getType().equals(Material.AIR)) {
+            Chat.sendMessage(bukkitPlayer, ChatColor.RED + "そこには隠れられないよ!! 隠れる下のブロックがありません!! ブロックの上に隠れてね", true);
+            bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.BLOCK_ANVIL_LAND, 1 , 1);
+            return;
+        }
+        bukkitPlayer.getWorld().setBlockData(bukkitPlayer.getLocation(), block.getBlockData());
         bukkitPlayer.getWorld().spawnParticle(Particle.CLOUD, bukkitPlayer.getLocation(), 15, 0.3, 0.3, 0.3, 0);
         bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1 , 1);
+        user.setHiding(true);
+    }
+
+    public static void removeHidingBlock(Player player, Location hidingBlockLocation) {
+        removeHidingBlock(player.getUniqueId(), hidingBlockLocation);
+    }
+
+    public static void removeHidingBlock(UUID player, Location hidingBlockLocation) {
+        Player bukkitPlayer = Bukkit.getPlayer(player);
+        User user = getPlayer(player);
+        if (user.isHiding()) {
+            hidingBlockLocation.getBlock().setType(Material.AIR);
+            user.setHiding(false);
+            Chat.sendMessage(bukkitPlayer, ChatColor.RED + "隠れブロックから動いたため、隠れモードではなくなりました!!", true);
+            bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1);
+        }
     }
 }
