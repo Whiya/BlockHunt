@@ -8,6 +8,7 @@ import tokyo.ramune.blockhunt.info.Bossbar;
 import tokyo.ramune.blockhunt.info.Sidebar;
 import tokyo.ramune.blockhunt.listener.ListenerHandler;
 import tokyo.ramune.blockhunt.player.PlayerManager;
+import tokyo.ramune.blockhunt.player.TeamManager;
 
 public final class BlockHunt extends JavaPlugin {
     public static Bossbar bossbar;
@@ -23,6 +24,7 @@ public final class BlockHunt extends JavaPlugin {
         new ListenerHandler(this);
         new CommandHandler(this);
 
+        TeamManager.initializeTeams();
         PlayerManager.initializePlayers();
 
         bossbar = new Bossbar(plugin);

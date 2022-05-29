@@ -2,11 +2,12 @@ package tokyo.ramune.blockhunt.player;
 
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import tokyo.ramune.blockhunt.util.Chat;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.UUID;
 
 public class PlayerManager {
@@ -31,6 +32,15 @@ public class PlayerManager {
 
     public static User[] getPlayers() {
         return users.toArray(new User[0]);
+    }
+
+    public static User getPlayerFromHoldBlock(Location holdBlockLocation) {
+        for (User user : users) {
+            if (Objects.equals(holdBlockLocation, user.getHoldBlockLocation())) {
+                return user;
+            }
+        }
+        return null;
     }
 
     public static void removePlayer(Player player) {
@@ -59,6 +69,22 @@ public class PlayerManager {
         }
     }
 
+    public static void initializeInventory(Player player) {
+        Inventory inv = player.getInventory();
+        switch (getPlayer(player).getRole()) {
+            case RUNNER:
+                inv.setItem(26, RunnerItem.getTargetingBlock());
+                inv.setItem(26, RunnerItem.getTargetingBlock());
+                break;
+            case DAEMON:
+                break;
+            case SPECTATOR:
+                break;
+            case NONE:
+                break;
+        }
+    }
+
     public static boolean isExistsUser(Player player) {
         return isExistsUser(player.getUniqueId());
     }
@@ -73,11 +99,11 @@ public class PlayerManager {
     }
 
     // ゲーム
-    public static void hideBlock(Player player, Block block) {
-        hideBlock(player.getUniqueId(), block);
+    public static void holdBlock(Player player, Block block) {
+        holdBlock(player.getUniqueId(), block);
     }
 
-    public static void hideBlock(UUID player, Block block) {
+    public static void holdBlock(UUID player, Block block) {
         Player bukkitPlayer = Bukkit.getPlayer(player);
         User user = getPlayer(player);
         if (getPlayer(player).getTargetBlock() == null) {
@@ -102,11 +128,11 @@ public class PlayerManager {
         user.setHiding(true);
     }
 
-    public static void removeHidingBlock(Player player, Location hidingBlockLocation) {
-        removeHidingBlock(player.getUniqueId(), hidingBlockLocation);
+    public static void removeHoldBlock(Player player, Location hidingBlockLocation) {
+        removeHoldBlock(player.getUniqueId(), hidingBlockLocation);
     }
 
-    public static void removeHidingBlock(UUID player, Location hidingBlockLocation) {
+    public static void removeHoldBlock(UUID player, Location hidingBlockLocation) {
         Player bukkitPlayer = Bukkit.getPlayer(player);
         User user = getPlayer(player);
         if (user.isHiding()) {

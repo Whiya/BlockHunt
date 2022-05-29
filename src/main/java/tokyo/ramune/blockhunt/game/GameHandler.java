@@ -7,7 +7,7 @@ public class GameHandler {
     private static boolean status = false;
     private static int time = 0;
 
-    public static void start() {
+    public static void start(GameMode gameMode) {
         if (status) {
             return;
         }

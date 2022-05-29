@@ -22,7 +22,7 @@ public class PlayerSneakListener implements Listener {
                     && user.getRole().equals(Role.RUNNER)
                     && user.getTargetBlock() != null
                     && !user.isHiding()) {
-                PlayerManager.hideBlock(player, user.getTargetBlock());
+                PlayerManager.holdBlock(player, user.getTargetBlock());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
