@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.Nullable;
+import tokyo.ramune.blockhunt.command.subcommand.*;
 import tokyo.ramune.blockhunt.util.Chat;
 
 import java.util.ArrayList;
@@ -20,7 +21,12 @@ public class CommandHandler implements CommandExecutor {
         plugin.getCommand("blockhunt").setExecutor(this);
 
         registerSubCommand(new HelpCommand());
+        registerSubCommand(new AddDaemonCommand());
+        registerSubCommand(new AddTimeCommand());
+        registerSubCommand(new RemoveDaemonCommand());
+        registerSubCommand(new RemoveTimeCommand());
         registerSubCommand(new StartCommand());
+        registerSubCommand(new StopCommand());
     }
 
     @Override

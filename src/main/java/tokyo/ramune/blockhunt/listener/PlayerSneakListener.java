@@ -1,7 +1,5 @@
 package tokyo.ramune.blockhunt.listener;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,7 +7,6 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import tokyo.ramune.blockhunt.player.PlayerManager;
 import tokyo.ramune.blockhunt.player.Role;
 import tokyo.ramune.blockhunt.player.User;
-import tokyo.ramune.blockhunt.util.Chat;
 
 public class PlayerSneakListener implements Listener {
 

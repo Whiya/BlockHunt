@@ -12,7 +12,10 @@ public class Sidebar {
         plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),"scoreboard objectives add info dummy \"§9情報\"");
         plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),"scoreboard objectives setdisplay sidebar info");
         plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),"scoreboard objectives ");
+        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),"/scoreboard players add 開発中 info 0");
 
     }
+
+
 
 }

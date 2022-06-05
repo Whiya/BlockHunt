@@ -2,8 +2,12 @@ package tokyo.ramune.blockhunt.player;
 
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import tokyo.ramune.blockhunt.game.GameHandler;
+import tokyo.ramune.blockhunt.game.item.runner.HideBlockSelectItem;
+import tokyo.ramune.blockhunt.game.item.runner.HoldBlockItem;
 import tokyo.ramune.blockhunt.util.Chat;
 
 import java.util.ArrayList;
@@ -73,14 +77,20 @@ public class PlayerManager {
         Inventory inv = player.getInventory();
         switch (getPlayer(player).getRole()) {
             case RUNNER:
-                inv.setItem(26, RunnerItem.getTargetingBlock());
-                inv.setItem(26, RunnerItem.getTargetingBlock());
+                inv.setItem(new HideBlockSelectItem().getItemSlot(), new HideBlockSelectItem().getGameItem());
+                inv.setItem(new HoldBlockItem().getItemSlot(), new HoldBlockItem().getGameItem());
                 break;
+
             case DAEMON:
                 break;
+
             case SPECTATOR:
                 break;
+
             case NONE:
+                if (player.isOp()) {
+
+                }
                 break;
         }
     }
@@ -106,6 +116,10 @@ public class PlayerManager {
     public static void holdBlock(UUID player, Block block) {
         Player bukkitPlayer = Bukkit.getPlayer(player);
         User user = getPlayer(player);
+
+        if (!GameHandler.isStarted()) {
+            return;
+        }
         if (getPlayer(player).getTargetBlock() == null) {
             Chat.sendMessage(bukkitPlayer, ChatColor.RED + "まだ隠れるブロックが選択されてないみたいだよ! 隠れるブロックを右クリックして選択しよう!!", true);
             bukkitPlayer.playSound(Bukkit.getPlayer(player).getLocation(), Sound.BLOCK_ANVIL_LAND, 1 , 1);
@@ -122,7 +136,13 @@ public class PlayerManager {
             bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.BLOCK_ANVIL_LAND, 1 , 1);
             return;
         }
+
+
+        bukkitPlayer.setGameMode(GameMode.SPECTATOR);
+
         bukkitPlayer.getWorld().setBlockData(bukkitPlayer.getLocation(), block.getBlockData());
+
+        //パーティクル、サウンド、隠れ中を有効に
         bukkitPlayer.getWorld().spawnParticle(Particle.CLOUD, bukkitPlayer.getLocation(), 15, 0.3, 0.3, 0.3, 0);
         bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1 , 1);
         user.setHiding(true);
@@ -135,6 +155,10 @@ public class PlayerManager {
     public static void removeHoldBlock(UUID player, Location hidingBlockLocation) {
         Player bukkitPlayer = Bukkit.getPlayer(player);
         User user = getPlayer(player);
+
+        if (!GameHandler.isStarted()) {
+            return;
+        }
         if (user.isHiding()) {
             hidingBlockLocation.getBlock().setType(Material.AIR);
             user.setHiding(false);
@@ -142,4 +166,5 @@ public class PlayerManager {
             bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1);
         }
     }
+
 }

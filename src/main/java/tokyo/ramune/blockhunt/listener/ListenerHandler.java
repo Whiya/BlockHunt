@@ -1,6 +1,5 @@
 package tokyo.ramune.blockhunt.listener;
 
-import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 

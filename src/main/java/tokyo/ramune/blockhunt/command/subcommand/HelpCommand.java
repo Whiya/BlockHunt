@@ -1,8 +1,9 @@
-package tokyo.ramune.blockhunt.command;
+package tokyo.ramune.blockhunt.command.subcommand;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import tokyo.ramune.blockhunt.command.CommandHandler;
 import tokyo.ramune.blockhunt.util.Chat;
 
 public class HelpCommand implements SubCommand {

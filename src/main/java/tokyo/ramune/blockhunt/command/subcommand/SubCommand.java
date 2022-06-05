@@ -1,4 +1,4 @@
-package tokyo.ramune.blockhunt.command;
+package tokyo.ramune.blockhunt.command.subcommand;
 
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
