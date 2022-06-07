@@ -20,6 +20,9 @@ public class RemoveDaemonCommand implements SubCommand {
 
     @Override
     public void onCommand(@NonNull Player player, String[] args) {
+        if (!player.isOp()) {
+            return;
+        }
         if (GameHandler.getDaemonAmount() == 0) {
             Chat.sendMessage(player, ChatColor.RED + "鬼の数は0人以下には設定できません", true);
             return;

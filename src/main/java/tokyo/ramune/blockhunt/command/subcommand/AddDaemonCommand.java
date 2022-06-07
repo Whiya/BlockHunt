@@ -20,6 +20,9 @@ public class AddDaemonCommand implements SubCommand {
 
     @Override
     public void onCommand(@NonNull Player player, String[] args) {
+        if (!player.isOp()) {
+            return;
+        }
         GameHandler.setDaemonAmount(GameHandler.getDaemonAmount() + 1);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
         Chat.sendMessage(player, ChatColor.GREEN + "鬼の数を1人増やしました。 - " + ChatColor.YELLOW.toString() + (GameHandler.getDaemonAmount() - 1) + " → " + GameHandler.getDaemonAmount(), true);

@@ -63,7 +63,7 @@ public class PlayerManager {
 
     private static void initializePlayer(UUID player) {
         if (!isExistsUser(player)) {
-            users.add(new User(player, Role.RUNNER));
+            users.add(new User(player, Role.NONE));
         }
     }
 
@@ -75,6 +75,7 @@ public class PlayerManager {
 
     public static void initializeInventory(Player player) {
         Inventory inv = player.getInventory();
+        player.getInventory().clear();
         switch (getPlayer(player).getRole()) {
             case RUNNER:
                 inv.setItem(new HideBlockSelectItem().getItemSlot(), new HideBlockSelectItem().getGameItem());
@@ -82,15 +83,31 @@ public class PlayerManager {
                 break;
 
             case DAEMON:
+
                 break;
 
             case SPECTATOR:
+
                 break;
 
             case NONE:
                 if (player.isOp()) {
 
                 }
+                break;
+        }
+    }
+
+    public static void initializeGameMode(Player player) {
+        switch (getPlayer(player).getRole()) {
+            case RUNNER:
+            case DAEMON:
+            case NONE:
+                player.setGameMode(GameMode.ADVENTURE);
+                break;
+
+            case SPECTATOR:
+                player.setGameMode(GameMode.SPECTATOR);
                 break;
         }
     }
@@ -108,7 +125,7 @@ public class PlayerManager {
         return false;
     }
 
-    // ゲーム
+   // ゲーム
     public static void holdBlock(Player player, Block block) {
         holdBlock(player.getUniqueId(), block);
     }
@@ -116,11 +133,10 @@ public class PlayerManager {
     public static void holdBlock(UUID player, Block block) {
         Player bukkitPlayer = Bukkit.getPlayer(player);
         User user = getPlayer(player);
-
-        if (!GameHandler.isStarted()) {
+        if (user.isHiding()) {
             return;
         }
-        if (getPlayer(player).getTargetBlock() == null) {
+        if (user.getTargetBlock() == null) {
             Chat.sendMessage(bukkitPlayer, ChatColor.RED + "まだ隠れるブロックが選択されてないみたいだよ! 隠れるブロックを右クリックして選択しよう!!", true);
             bukkitPlayer.playSound(Bukkit.getPlayer(player).getLocation(), Sound.BLOCK_ANVIL_LAND, 1 , 1);
             return;
@@ -136,16 +152,9 @@ public class PlayerManager {
             bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.BLOCK_ANVIL_LAND, 1 , 1);
             return;
         }
-
-
-        bukkitPlayer.setGameMode(GameMode.SPECTATOR);
-
+        bukkitPlayer.teleport(block.getLocation().clone().set(0.5, 0, 0.5));
         bukkitPlayer.getWorld().setBlockData(bukkitPlayer.getLocation(), block.getBlockData());
-
-        //パーティクル、サウンド、隠れ中を有効に
-        bukkitPlayer.getWorld().spawnParticle(Particle.CLOUD, bukkitPlayer.getLocation(), 15, 0.3, 0.3, 0.3, 0);
-        bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1 , 1);
-        user.setHiding(true);
+        user.setHide(block);
     }
 
     public static void removeHoldBlock(Player player, Location hidingBlockLocation) {
@@ -155,16 +164,10 @@ public class PlayerManager {
     public static void removeHoldBlock(UUID player, Location hidingBlockLocation) {
         Player bukkitPlayer = Bukkit.getPlayer(player);
         User user = getPlayer(player);
-
-        if (!GameHandler.isStarted()) {
-            return;
-        }
-        if (user.isHiding()) {
-            hidingBlockLocation.getBlock().setType(Material.AIR);
-            user.setHiding(false);
-            Chat.sendMessage(bukkitPlayer, ChatColor.RED + "隠れブロックから動いたため、隠れモードではなくなりました!!", true);
-            bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1);
-        }
+        user.setShow(hidingBlockLocation);
+        hidingBlockLocation.getBlock().setType(Material.AIR);
+        Chat.sendMessage(bukkitPlayer, ChatColor.RED + "隠れブロックから動いたため、隠れモードではなくなりました!!", true);
+        bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1);
     }
 
 }

@@ -20,10 +20,7 @@ public class PlayerMoveListener implements Listener {
         User user = PlayerManager.getPlayer(player);
 
         // ブロックに隠れていたらうげけなくする(x, y, z)
-        if (user.isHiding()
-                && (to.getBlockX() != from.getBlockX()
-                && to.getBlockY() != from.getBlockY()
-                && to.getBlockZ() != from.getBlockZ())) {
+        if (user.isHiding()) {
             e.setCancelled(true);
         }
         
@@ -43,14 +40,6 @@ public class PlayerMoveListener implements Listener {
             fb.setGravity(false);
 
             user.setFallingBlock(fb);
-
-        }else{
-            
-            //隠れ中を終わらせる
-            PlayerManager.removeHoldBlock(player,from);
-            
         }
-
-
     }
 }

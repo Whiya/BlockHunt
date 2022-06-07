@@ -39,15 +39,14 @@ public class HoldBlockItem implements GameItem {
         Player player = e.getPlayer();
         User user = PlayerManager.getPlayer(player);
 
-        if (!((e.getAction().equals(Action.RIGHT_CLICK_BLOCK) || e.getAction().equals(Action.RIGHT_CLICK_AIR))
-                && Objects.equals(e.getHand(), EquipmentSlot.HAND)
+        if (!(Objects.equals(e.getHand(), EquipmentSlot.HAND)
                 && user.getRole().equals(Role.RUNNER))) {
             return;
         }
-        if (user.isHiding()){
+        if (!user.isHiding()){
             PlayerManager.holdBlock(player,user.getTargetBlock());
-        }else{
-            PlayerManager.removeHoldBlock(player,user.getHoldBlockLocation());
+        } else {
+            PlayerManager.removeHoldBlock(player, user.getHoldBlockLocation());
         }
     }
 }

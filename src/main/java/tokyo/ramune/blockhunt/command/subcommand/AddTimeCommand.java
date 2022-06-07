@@ -21,6 +21,9 @@ public class AddTimeCommand implements SubCommand {
 
     @Override
     public void onCommand(@NonNull Player player, String[] args) {
+        if (!player.isOp()) {
+            return;
+        }
         GameHandler.setTime(GameHandler.getTime() + 10);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
         Chat.sendMessage(player, ChatColor.GREEN + "時間を10秒増やしました。 - " + ChatColor.YELLOW.toString() + (GameHandler.getTime() - 10) + " → " + GameHandler.getTime(), true);

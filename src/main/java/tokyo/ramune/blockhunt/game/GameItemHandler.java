@@ -3,10 +3,11 @@ package tokyo.ramune.blockhunt.game;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import tokyo.ramune.blockhunt.game.item.runner.HideBlockSelectItem;
+import tokyo.ramune.blockhunt.game.item.runner.HoldBlockItem;
 
 public class GameItemHandler {
 
-    private static final GameItem[] gameItems = {new HideBlockSelectItem()};
+    private static final GameItem[] gameItems = {new HideBlockSelectItem(), new HoldBlockItem()};
 
     public static GameItem[] getGameItems() {
         return gameItems;

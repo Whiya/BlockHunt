@@ -13,6 +13,7 @@ import tokyo.ramune.blockhunt.util.Chat;
 
 import java.util.ArrayList;
 
+
 public class CommandHandler implements CommandExecutor {
 
     private static final ArrayList<SubCommand> subCommands = new ArrayList<>();

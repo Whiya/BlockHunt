@@ -22,6 +22,9 @@ public class HelpCommand implements SubCommand {
 
     @Override
     public void onCommand(@NonNull Player player, String[] args) {
+        if (!player.isOp()) {
+            return;
+        }
         Chat.sendMessage(player, "", false);
         Chat.sendMessage(player, ChatColor.GREEN + "[ヘルプ]", true);
         Chat.sendMessage(player, ChatColor.AQUA + "[サブコマンド] " + ChatColor.LIGHT_PURPLE + "[説明]", true);

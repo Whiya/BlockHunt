@@ -27,6 +27,7 @@ public class HideBlockSelectItem implements GameItem {
         ArrayList<String> lore = new ArrayList<>();
         itemMeta.setDisplayName(ChatColor.GOLD + "隠れるブロックを選択" + ChatColor.WHITE + " - " + ChatColor.YELLOW + "右クリックで選択");
         itemMeta.setLore(lore);
+        itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
 

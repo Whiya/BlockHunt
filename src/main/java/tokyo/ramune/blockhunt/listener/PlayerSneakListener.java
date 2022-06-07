@@ -14,15 +14,5 @@ public class PlayerSneakListener implements Listener {
     public void onPlayerSneak(PlayerToggleSneakEvent e) {
         Player player = e.getPlayer();
         User user = PlayerManager.getPlayer(player);
-        try {
-            if (e.isSneaking()
-                    && user.getRole().equals(Role.RUNNER)
-                    && user.getTargetBlock() != null
-                    && !user.isHiding()) {
-                PlayerManager.holdBlock(player, user.getTargetBlock());
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 }

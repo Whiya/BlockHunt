@@ -1,0 +1,13 @@
+tokyo.ramune.blockhunt
+tokyo.ramune.blockhunt.command
+tokyo.ramune.blockhunt.command.subcommand
+tokyo.ramune.blockhunt.config
+tokyo.ramune.blockhunt.game
+tokyo.ramune.blockhunt.game.item.administrator
+tokyo.ramune.blockhunt.game.item.runner
+tokyo.ramune.blockhunt.info
+tokyo.ramune.blockhunt.listener
+tokyo.ramune.blockhunt.menu
+tokyo.ramune.blockhunt.menu.item
+tokyo.ramune.blockhunt.player
+tokyo.ramune.blockhunt.util
