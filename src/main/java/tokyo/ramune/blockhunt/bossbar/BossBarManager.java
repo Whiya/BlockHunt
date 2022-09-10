@@ -18,6 +18,7 @@ public class BossBarManager {
     private int maxTime = 0;
 
     public BossBarManager() {
+        //ボスバーが存在しなければ作成？
         if (Bukkit.getBossBar(new NamespacedKey(BlockHunt.getPlugin(), "blockhunt.bossbar")) == null) {
             Bukkit.createBossBar(new NamespacedKey(BlockHunt.getPlugin(), "blockhunt.bossbar"), "残り時間 0秒", BarColor.BLUE, BarStyle.SOLID, new BarFlag[0]);
         }

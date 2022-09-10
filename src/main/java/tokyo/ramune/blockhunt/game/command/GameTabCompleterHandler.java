@@ -19,11 +19,11 @@ class GameTabCompleterHandler implements TabCompleter {
         if (args.length != 1) {
             return null;
         } else {
-            SubCommand[] var6 = BlockHunt.getGameCommandManager().getSubCommands();
-            int var7 = var6.length;
+            SubCommand[] sub = BlockHunt.getGameCommandManager().getSubCommands();
+            int subs = sub.length;
 
-            for(int var8 = 0; var8 < var7; ++var8) {
-                SubCommand _command = var6[var8];
+            for(int i = 0; i < subs; ++i) {
+                SubCommand _command = sub[i];
                 StringUtil.copyPartialMatches(args[0], Collections.singleton(_command.getSubCommand()), completions);
             }
 
