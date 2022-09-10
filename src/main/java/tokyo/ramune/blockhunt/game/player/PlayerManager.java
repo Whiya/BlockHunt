@@ -39,7 +39,6 @@ public class PlayerManager {
         } catch (Exception var2) {
             var2.printStackTrace();
         }
-
     }
 
     public HuntPlayer getHuntPlayer(Player player) {
