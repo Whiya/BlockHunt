@@ -1,9 +1,11 @@
 package tokyo.ramune.blockhunt.game.player;
 
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import tokyo.ramune.blockhunt.BlockHunt;
@@ -13,9 +15,14 @@ class PlayerManagerListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerLogin(PlayerLoginEvent e) {
+    public void onPlayerLogin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         BlockHunt.getPlayerManager().initializePlayer(player);
+
+        //ゲーム開始していなかったら参加したときは Spawn_locationに
+        if (!(BlockHunt.getGameManager().isStarted())){
+            player.teleport(BlockHunt.getConfigFile().SPAWN_LOCATION);
+        }
     }
 
     @EventHandler

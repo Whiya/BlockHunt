@@ -13,6 +13,8 @@ public class PlayerManager {
     private final ArrayList<HuntPlayer> huntPlayers = new ArrayList();
 
     public PlayerManager() {
+        huntPlayers.removeAll(huntPlayers);
+
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerManagerListener(), BlockHunt.getPlugin());
         Bukkit.getOnlinePlayers().forEach(this::initializePlayer);
     }
@@ -68,6 +70,18 @@ public class PlayerManager {
 
     public ArrayList<HuntPlayer> getHuntPlayers() {
         return this.huntPlayers;
+    }
+
+    public void hidePlayer(HuntPlayer player) {
+        if (!player.getRole().equals(HuntPlayerRole.RUNNER))
+            return;
+        if (player.isHiding())
+            return;
+        player.setHide(true);
+    }
+
+    public void showPlayer(HuntPlayer player) {
+
     }
 
     public void initializePlayer(Player player) {
@@ -133,5 +147,27 @@ public class PlayerManager {
 
         });
         return awaitPlayers;
+    }
+
+    public int seachindex(Player player){
+        for (int i = 0;i<=huntPlayers.size();i++){
+            if(huntPlayers.get(i).getPlayer().equals(player)){
+                return i;
+            }
+        }
+
+        return 0;
+    }
+
+
+    public void setRole(Player pl,HuntPlayerRole role){
+        if (huntPlayers.get(seachindex(pl)).getRole().equals(role)){
+            return;
+        }
+        huntPlayers.get(seachindex(pl)).setRole(role);
+    }
+    public HuntPlayerRole getRole(Player pl){
+
+        return huntPlayers.get(seachindex(pl)).getRole();
     }
 }

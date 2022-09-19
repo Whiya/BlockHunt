@@ -27,4 +27,39 @@ public class Config {
         this.configFile.reloadConfig();
         this.load();
     }
+
+    public void setSPAWN_LOCATION(Location loc){
+        this.config.set("config.spawn-location.world",loc.getWorld().getName());
+        this.config.set("config.spawn-location.x",loc.getX());
+        this.config.set("config.spawn-location.y",loc.getY());
+        this.config.set("config.spawn-location.z",loc.getZ());
+        this.config.set("config.spawn-location.yaw",loc.getYaw());
+        this.config.set("config.spawn-location.pitch",loc.getPitch());
+        this.configFile.saveConfig();
+        reload();
+    }
+    public void setSTART_LOCATION(Location loc){
+        this.config.set("config.start-location.world",loc.getWorld().getName());
+        this.config.set("config.start-location.x",loc.getX());
+        this.config.set("config.start-location.y",loc.getY());
+        this.config.set("config.start-location.z",loc.getZ());
+        this.config.set("config.start-location.yaw",loc.getYaw());
+        this.config.set("config.start-location.pitch",loc.getPitch());
+        this.configFile.saveConfig();
+        reload();
+    }
+    public void setSPECTATOR_LOCATION(Location loc){
+        this.config.set("config.spectator-location.world",loc.getWorld().getName());
+        this.config.set("config.spectator-location.x",loc.getX());
+        this.config.set("config.spectator-location.y",loc.getY());
+        this.config.set("config.spectator-location.z",loc.getZ());
+        this.config.set("config.spectator-location.yaw",loc.getYaw());
+        this.config.set("config.spectator-location.pitch",loc.getPitch());
+        this.configFile.saveConfig();
+        reload();
+    }
+
+
+
+
 }

@@ -14,6 +14,10 @@ public class GameItemListener implements Listener {
         Player player = event.getPlayer();
 
         ItemStack handItem = Objects.requireNonNull(event.getItem());
+        //手持ちなしの場合
+        if (handItem.equals(null)){
+            return;
+        }
         if (handItem.equals(GameItemResource.getHide().getItemStack())) {
             //隠れる
             GameItemResource.getHide().onClick(event);

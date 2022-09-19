@@ -32,8 +32,11 @@ public class GiveGameItemCommand implements SubCommand {
                     case "block_select":
                         player.getInventory().addItem(new ItemStack[]{GameItemResource.getSelectHideBlock().getItemStack()});
                         break;
-                    case "kakureru":
+                    case "hide":
                         player.getInventory().addItem(new ItemStack[]{GameItemResource.getHide().getItemStack()});
+                        break;
+                    case "kanabou":
+                        player.getInventory().addItem(new ItemStack[]{GameItemResource.getGoldStick().getItemStack()});
                         break;
                     default:
                         this.sendHelp(player);
@@ -51,6 +54,8 @@ public class GiveGameItemCommand implements SubCommand {
         Chat.sendMessage(player, ChatColor.AQUA + "omaeoni  " + ChatColor.LIGHT_PURPLE + "鬼を選択するアイテム", true);
         Chat.sendMessage(player, ChatColor.AQUA + "omaenige  " + ChatColor.LIGHT_PURPLE + "逃げを選択するアイテム", true);
         Chat.sendMessage(player, ChatColor.AQUA + "block_select  " + ChatColor.LIGHT_PURPLE + "ブロックを選択するアイテム", true);
-        Chat.sendMessage(player, ChatColor.AQUA + "omaeoni  " + ChatColor.LIGHT_PURPLE + "鬼を選択するアイテム", true);
+        Chat.sendMessage(player, ChatColor.AQUA + "hide  " + ChatColor.LIGHT_PURPLE + "隠れるアイテム", true);
+        Chat.sendMessage(player, ChatColor.AQUA + "kanabou  " + ChatColor.LIGHT_PURPLE + "鬼の棒アイテム", true);
+
     }
 }

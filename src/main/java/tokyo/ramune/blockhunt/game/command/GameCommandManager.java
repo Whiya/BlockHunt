@@ -4,14 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import tokyo.ramune.blockhunt.BlockHunt;
-import tokyo.ramune.blockhunt.game.command.subcommand.ChangeDaemonCommand;
-import tokyo.ramune.blockhunt.game.command.subcommand.ChangeTimeCommand;
-import tokyo.ramune.blockhunt.game.command.subcommand.DetectRolesCommand;
-import tokyo.ramune.blockhunt.game.command.subcommand.GiveGameItemCommand;
-import tokyo.ramune.blockhunt.game.command.subcommand.HelpCommand;
-import tokyo.ramune.blockhunt.game.command.subcommand.StartCommand;
-import tokyo.ramune.blockhunt.game.command.subcommand.StopCommand;
-import tokyo.ramune.blockhunt.game.command.subcommand.SubCommand;
+import tokyo.ramune.blockhunt.game.command.subcommand.*;
 
 public class GameCommandManager {
     private static final ArrayList<SubCommand> subCommands = new ArrayList();
@@ -26,6 +19,9 @@ public class GameCommandManager {
         this.registerSubCommand(new ChangeDaemonCommand());
         this.registerSubCommand(new DetectRolesCommand());
         this.registerSubCommand(new GiveGameItemCommand());
+        this.registerSubCommand(new ChangeSpawnLoc());
+        this.registerSubCommand(new ChangeStartLoc());
+        this.registerSubCommand(new ChangeSpectatorLoc());
     }
 
     public SubCommand[] getSubCommands() {

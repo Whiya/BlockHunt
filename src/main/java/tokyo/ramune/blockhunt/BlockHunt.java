@@ -1,5 +1,6 @@
 package tokyo.ramune.blockhunt;
 
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import tokyo.ramune.blockhunt.bossbar.BossBarManager;
 import tokyo.ramune.blockhunt.config.Config;
@@ -56,6 +57,7 @@ public final class BlockHunt extends JavaPlugin {
     public static Config getConfigFile() {
         return config;
     }
+
 
     public static GameManager getGameManager() {
         return gameManager;
